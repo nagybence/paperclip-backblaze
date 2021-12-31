@@ -4,7 +4,7 @@ module Backblaze::B2
                 :content_length, :content_sha1, :content_type, :file_info
 
     def initialize(file_id:, size:, upload_timestamp:, action:, file_name:,
-                   content_length:, content_sha1:, content_type:, file_info: {})
+                   content_length:, content_sha1:, content_type:, file_info: {}, **unneeded_args)
       @file_id = file_id
       @size = size
       @action = action
