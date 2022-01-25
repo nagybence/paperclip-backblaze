@@ -50,9 +50,13 @@ module Paperclip
 
         unless Paperclip::Interpolations.respond_to? :b2_path_url
           Paperclip.interpolates(:b2_path_url) do |attachment, style|
-            "#{::Backblaze::B2.download_url}/file/#{attachment.b2_bucket_name}/#{attachment.path(style).sub(%r{\A/}, '')}"
+            "#{attachment.cdn || ::Backblaze::B2.download_url}/file/#{attachment.b2_bucket_name}/#{attachment.path(style).sub(%r{\A/}, '')}"
           end
         end
+      end
+
+      def cdn
+        @options[:cdn]
       end
 
       # Reads b2_credentials from the config file
