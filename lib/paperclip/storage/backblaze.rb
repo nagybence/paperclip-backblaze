@@ -42,7 +42,6 @@ module Paperclip
       def self.extended(base)
         base.instance_eval do
           @b2_buckets = {}
-          login
           unless @options[:url] =~ /\Ab2.*url\z/
             @options[:url] = ':b2_path_url'.freeze
           end
@@ -90,6 +89,7 @@ module Paperclip
 
       # Return the specified bucket name as a String.
       def b2_bucket_name
+        login
         @bucket_name ||= @options[:bucket] || b2_credentials.fetch(:bucket)
       end
 
