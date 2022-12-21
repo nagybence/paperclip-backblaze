@@ -84,12 +84,14 @@ module Paperclip
       # Return the Backblaze::B2::Bucket object representing the bucket
       # specified by the required options[:b2_bucket].
       def b2_bucket
-        @b2_buckets[b2_bucket_name] ||= ::Backblaze::B2::Bucket.get_bucket(name: b2_bucket_name)
+        @b2_buckets[b2_bucket_name] ||= begin
+          login
+          ::Backblaze::B2::Bucket.get_bucket(name: b2_bucket_name)
+        end
       end
 
       # Return the specified bucket name as a String.
       def b2_bucket_name
-        login
         @bucket_name ||= @options[:bucket] || b2_credentials.fetch(:bucket)
       end
 
